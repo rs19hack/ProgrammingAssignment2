@@ -10,12 +10,13 @@
 
 # makeCacheMatrix creates a new list object that has the following methods:
 # a getter, a setter, inverse calculator/setter, inverse retriever/getter.
+# This list object is a wrapper around the input matrix 
 
 makeCacheMatrix <- function(x = matrix()) {
   m <- NULL
   set <- function(y) {
-    x <<- y
-    m <<- NULL
+    x <<- y             # store the input matrix
+    m <<- NULL          # placeholder for inverse matrix, to be filled with the setter
   }
   get <- function() x
   setinverse <- function(solve) m <<- solve
@@ -37,9 +38,9 @@ cacheSolve <- function(x, ...) {
     return(m)
   }
   message("Don't have computation cached. Calculating inverse of input matrix...")
-  data <- x$get()
+  data <- x$get()   # pull out the actual input matrix from the input (list object)
   m <- solve(data)  # calculate the inverse of the given matrix
-  x$setinverse(m)
+  x$setinverse(m)   # store the inverse in the cache
   m
 }
 
